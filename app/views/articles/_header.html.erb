@@ -1,0 +1,25 @@
+<% unless @articles.present? %>
+  <% unless current_user %>
+    <span>There is no article, Please Login to add you first article.<span><br/><br/>
+  <% end %>
+<% end %>
+<!-- Show 'New' button only if user is signed in -->
+<div class="row">
+  <div class="span6">
+    <% if user_signed_in? %>
+      <p><%= link_to t('.new', :default => t("helpers.links.new")), new_article_path, :class => 'btn btn-primary' %></p>
+    <% end %>
+  </div>
+  <div class="span4">
+    <%= form_tag '/', :method => 'get' do %>
+      <p>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Search", :name => nil, class: "btn btn-primary btn-search" %>
+      </p>
+    <% end %>
+  </div>
+  <div class="span2">
+    <p><%= select_tag 'sort', options_for_select([['Newest', 'newest'], ['Popular', 'popular']], params["value"]) %></p>
+  </div>
+</div>
+<hr>
